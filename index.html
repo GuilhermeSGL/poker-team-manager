@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Poker Team Manager</title>
+  <meta name="description" content="Painel de gestão de time de poker: stake, makeup, ROI, ABI e acertos.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand"><span class="chip">♠</span> Poker Team Manager</div>
+    <nav class="tabs" role="tablist">
+      <button role="tab" data-tab="dashboard" aria-selected="true">Painel</button>
+      <button role="tab" data-tab="sessions">Sessões</button>
+      <button role="tab" data-tab="players">Jogadores</button>
+      <button role="tab" data-tab="settle">Acertos</button>
+    </nav>
+    <div class="actions">
+      <button class="ghost" id="btn-export" title="Baixar os dados em JSON">Exportar</button>
+      <label class="ghost file">Importar<input type="file" id="file-import" accept="application/json" hidden></label>
+      <button class="ghost" id="btn-demo" title="Recarregar dados fictícios">Demo</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="tab-dashboard" class="tab active">
+      <div class="kpis" id="kpis"></div>
+      <div class="card">
+        <div class="card-head"><h2>Lucro acumulado</h2><span class="muted">por jogador, em US$</span></div>
+        <div class="chart-wrap"><canvas id="chart"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>Jogadores</h2><span class="muted">makeup considera as sessões ainda não acertadas</span></div>
+        <div class="table-wrap"><table id="players-table"></table></div>
+      </div>
+    </section>
+
+    <section id="tab-sessions" class="tab">
+      <form class="card form" id="session-form">
+        <h2>Nova sessão</h2>
+        <div class="grid">
+          <label>Jogador<select name="playerId" required></select></label>
+          <label>Data<input type="date" name="date" required></label>
+          <label>Site<input name="site" placeholder="GGPoker" required></label>
+          <label>Torneios<input type="number" name="entries" min="1" required></label>
+          <label>ITM<input type="number" name="itm" min="0" value="0"></label>
+          <label>Buy-ins (US$)<input type="number" name="buyins" min="0" step="0.01" required></label>
+          <label>Prêmios (US$)<input type="number" name="cashes" min="0" step="0.01" value="0"></label>
+        </div>
+        <button class="primary">Adicionar sessão</button>
+      </form>
+      <div class="card">
+        <div class="card-head"><h2>Histórico</h2>
+          <select id="filter-player" aria-label="Filtrar por jogador"></select>
+        </div>
+        <div class="table-wrap"><table id="sessions-table"></table></div>
+      </div>
+    </section>
+
+    <section id="tab-players" class="tab">
+      <form class="card form" id="player-form">
+        <h2>Novo jogador</h2>
+        <div class="grid">
+          <label>Nome<input name="name" required></label>
+          <label>% do lucro para o jogador<input type="number" name="share" min="0" max="100" value="50" required></label>
+          <label>Makeup inicial (US$)<input type="number" name="makeup" max="0" step="0.01" value="0"></label>
+        </div>
+        <button class="primary">Adicionar jogador</button>
+      </form>
+      <div class="card"><div class="table-wrap"><table id="deals-table"></table></div></div>
+    </section>
+
+    <section id="tab-settle" class="tab">
+      <div class="card">
+        <div class="card-head"><h2>Acerto do pacote</h2><span class="muted">o lucro abate o makeup antes da divisão</span></div>
+        <div class="settle-grid" id="settle-cards"></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>Acertos fechados</h2></div>
+        <div class="table-wrap"><table id="settlements-table"></table></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">Dados ficam só no seu navegador. Demo com jogadores fictícios.</footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "name": "poker-team-manager",
+  "version": "1.0.0",
+  "description": "Painel de gestão de time de poker: stake, makeup, ROI, ABI e acertos",
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/"
+  },
+  "license": "MIT"
+}
