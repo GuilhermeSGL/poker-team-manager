@@ -1,6 +1,6 @@
 # Poker Team Manager
 
-> *Dashboard for running a backed poker team: per-player stats (ROI, ABI, ITM, volume), staking deals with makeup and one-click package settlements. Zero build step, runs on GitHub Pages.*
+> *Dashboard for running a backed poker team: imports weekly site reports, scores each player against volume goals with automatic alerts, tracks skills, meetings, staking deals and makeup, and settles packages in one click. Zero build step, runs on GitHub Pages.*
 
 **[▶ Abrir a demo](https://guilhermesgl.github.io/poker-team-manager/)** · dados fictícios
 
@@ -12,6 +12,22 @@ Nasceu da minha rotina real como jogador profissional e gerente de time: as cont
 
 ## Funcionalidades
 
+### Gestão semanal do time
+- **Importa o relatório do site:** arraste o *Transactions Report* (Ignition/Bodog, .xlsx) de cada player. O painel reconhece o player pelo nome do perfil, soma buy-ins, re-entradas e prêmios por torneio e ignora torneios já importados.
+- **Fechamento da semana:** torneios × meta com semáforo (verde ≥ 80%, amarelo ≥ 60%, vermelho abaixo), ITM, ABI, ROI, resultado e makeup de cada player. Na semana em andamento, a meta é proporcional aos dias que já passaram.
+- **Avaliação automática:** alertas de volume abaixo da meta, queda forte de volume, ABI acima do combinado, makeup crescendo e player sem reunião há mais de 14 dias.
+- **Resumo pronto para enviar:** um clique copia o fechamento do player (ou do time) formatado para WhatsApp/Discord.
+
+![Fechamento semanal](docs/semana.jpg)
+
+### Ficha do player
+- Status (Ativo, Atenção, Crítico, Inativo), deal, meta semanal e ABI máximo combinado.
+- **Evolução técnica** em 11 competências (pré-flop, pós-flop, ICM, push/fold, blind war, mental game, organização, disciplina, comunicação, volume e comprometimento), com radar.
+- Histórico das últimas 8 semanas e registro de reuniões com próximos passos.
+
+![Ficha do player](docs/ficha.jpg)
+
+### Resultado e stake
 - **Painel do time:** lucro, ROI, ABI, volume, ITM e makeup em aberto, com gráfico de lucro acumulado por jogador.
 - **Sessões:** registro por jogador, data e site (torneios, ITM, buy-ins, prêmios), com filtro.
 - **Deals:** porcentagem do lucro de cada jogador e makeup inicial.
@@ -35,7 +51,7 @@ A regra está isolada em [`js/model.js`](js/model.js) como funções puras e cob
 
 ## Rodar e testar
 
-Não tem build. Qualquer servidor estático serve:
+Não tem build. No Windows, dê dois cliques em `abrir-painel.bat`. Ou use qualquer servidor estático:
 
 ```bash
 python -m http.server 8000
@@ -54,9 +70,11 @@ npm test
 index.html        layout e abas
 css/styles.css    tema (claro/escuro) e layout responsivo
 js/model.js       regras: estatísticas, acerto com makeup, lucro acumulado
+js/team.js        gestão: semanas, metas, semáforo, alertas, resumo
+js/importer.js    leitura do Transactions Report (Ignition/Bodog)
 js/app.js         interface, armazenamento, importar/exportar
 js/demo.js        gerador determinístico de dados fictícios
-test/             testes do modelo (node:test)
+test/             22 testes (node:test): modelo, importador e gestão
 ```
 
 ## Próximos passos

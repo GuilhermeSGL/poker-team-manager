@@ -14,6 +14,8 @@
     <div class="brand"><span class="chip">♠</span> Poker Team Manager</div>
     <nav class="tabs" role="tablist">
       <button role="tab" data-tab="dashboard" aria-selected="true">Painel</button>
+      <button role="tab" data-tab="team">Time</button>
+      <button role="tab" data-tab="week">Semana</button>
       <button role="tab" data-tab="sessions">Sessões</button>
       <button role="tab" data-tab="players">Jogadores</button>
       <button role="tab" data-tab="settle">Acertos</button>
@@ -35,6 +37,29 @@
       <div class="card">
         <div class="card-head"><h2>Jogadores</h2><span class="muted">makeup considera as sessões ainda não acertadas</span></div>
         <div class="table-wrap"><table id="players-table"></table></div>
+      </div>
+    </section>
+
+    <section id="tab-team" class="tab">
+      <div class="card-head"><h2>Players</h2><span class="muted">clique em um player para abrir a ficha</span></div>
+      <div class="team-grid" id="team-grid"></div>
+    </section>
+
+    <section id="tab-week" class="tab">
+      <div class="card">
+        <div class="card-head">
+          <h2>Fechamento semanal</h2>
+          <div class="week-tools">
+            <select id="week-select" aria-label="Semana"></select>
+            <label class="primary file">Importar relatórios (.xlsx)<input type="file" id="report-import" accept=".xlsx,.xls,.csv" multiple hidden></label>
+          </div>
+        </div>
+        <p class="muted">Use o <b>Transactions Report</b> do site (Ignition/Bodog). O player é reconhecido pelo nome do perfil; torneios já importados são ignorados.</p>
+        <div id="import-log"></div>
+      </div>
+      <div class="card">
+        <div class="table-wrap"><table id="week-table"></table></div>
+        <div class="week-actions"><button class="ghost" id="copy-team">Copiar resumo do time</button></div>
       </div>
     </section>
 
@@ -65,6 +90,10 @@
         <h2>Novo jogador</h2>
         <div class="grid">
           <label>Nome<input name="name" required></label>
+          <label>Nick<input name="nick"></label>
+          <label>Nome do perfil no site<input name="profileName" placeholder="como aparece no relatório"></label>
+          <label>Meta semanal (torneios)<input type="number" name="goal" min="0" value="50"></label>
+          <label>ABI máximo combinado (US$)<input type="number" name="maxAbi" min="0" step="0.01"></label>
           <label>% do lucro para o jogador<input type="number" name="share" min="0" max="100" value="50" required></label>
           <label>Makeup inicial (US$)<input type="number" name="makeup" max="0" step="0.01" value="0"></label>
         </div>
@@ -85,9 +114,17 @@
     </section>
   </main>
 
-  <footer class="foot">Dados ficam só no seu navegador. Demo com jogadores fictícios.</footer>
+  <dialog id="profile" class="profile" aria-labelledby="pf-title">
+    <form method="dialog" class="pf-close"><button class="ghost" aria-label="Fechar">✕</button></form>
+    <div id="profile-body"></div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <footer class="foot">Dados ficam só no seu navegador (use Exportar para backup). Demo com jogadores fictícios.</footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script type="module" src="js/app.js"></script>
 </body>
 </html>
