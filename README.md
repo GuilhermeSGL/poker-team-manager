@@ -6,7 +6,7 @@
 
 Painel para quem gerencia um time de poker com stake: acompanha o resultado de cada jogador, controla o makeup e calcula o acerto de cada pacote, mostrando quanto vai para o jogador e quanto fica com o time.
 
-Nasceu da minha rotina real como jogador profissional e gerente de time: as contas de makeup e de divisão de lucro costumam viver em planilhas frágeis, e um erro numa delas vira discussão com o jogador.
+Nasceu de uma rotina real de gestão de time: as contas de makeup e de divisão de lucro costumam viver em planilhas frágeis, e um erro numa delas vira discussão com o jogador.
 
 ![Painel](docs/painel.jpg)
 
